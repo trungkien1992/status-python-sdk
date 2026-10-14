@@ -34,7 +34,8 @@ class Account:
             "wallets": "wallet",
             "account": "accounts",
             "identity": "multiaccounts",
-            "settings": "settings"
+            "settings": "settings",
+            "network": "networks"
         }
     }
     __keccak256_selectors = {
@@ -582,9 +583,12 @@ class Account:
         if self.__chains:
             return self.__chains
 
-        result = self._call_rpc("wallets", "getEthereumChains").get("result", [])
-        key = "Prod"
-        self.__chains = {chain[key]["chainId"]: chain[key]["chainName"] for chain in result if chain.get(key)}
+        result = self._call_rpc("network", "getFlatEthereumChains").get("result", [])
+        self.__chains = {
+            chain["chainId"]: chain["chainName"]
+            for chain in result
+            if chain["enabled"] and chain["isActive"] and not chain["isTest"]
+        }
         return self.__chains
 
     @property
