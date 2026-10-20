@@ -115,6 +115,21 @@ class MessageTooLongError(ValueError):
 class SendContentError(Exception):
     pass
 
+class InvalidChainIdError(Exception):
+    pass
+
+class ActiveChainLimitError(Exception):
+    pass
+
+class ChainDeactivationError(Exception):
+    pass
+
+class SavedAddressError(Exception):
+    pass
+
+class InvalidSavedAddressNameError(ValueError):
+    pass
+
 class InvalidCurrencyError(Exception):
     pass
 
